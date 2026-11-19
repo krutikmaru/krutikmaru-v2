@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* RecentSkillCard's secondary layout: data-variant="secondary", or "responsive" below 500px. */
+@custom-variant card-secondary {
+  &:where([data-variant="secondary"] *) {
+    @slot;
+  }
+  @media (width < 500px) {
+    &:where([data-variant="responsive"] *) {
+      @slot;
+    }
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-site-background: var(--site-background);
+  --color-foreground: var(--foreground);
+  --color-title: var(--title);
+  --color-description: var(--description);
+  --color-icon: var(--icon);
+  --color-icon-hover: var(--icon-hover);
+  --color-accent-blue: #0088ff;
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-underline: var(--underline);
+  --color-underline-hover: var(--underline-hover);
+  --color-card-background: var(--card-background);
+  --color-card-background-hover: var(--card-background-hover);
+  --color-popover-background: var(--popover-background);
+  --color-popover-border: var(--popover-border);
+  --color-placeholder: var(--placeholder);
+  --color-item-background-hover: var(--item-background-hover);
+  --color-item-icon: var(--item-icon);
+  --color-item-icon-active: var(--item-icon-active);
+  --color-item-icon-background: var(--item-icon-background);
+  --color-item-icon-background-active: var(--item-icon-background-active);
+  --color-item-icon-border: var(--item-icon-border);
+  --color-item-icon-border-active: var(--item-icon-border-active);
+  --color-item-icon-shadow-1: var(--item-icon-shadow-1);
+  --color-item-icon-shadow-2: var(--item-icon-shadow-2);
+  --color-footer-icon: var(--footer-icon);
+  --color-footer-icon-hover: var(--footer-icon-hover);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  /* Spring (time 0.4s, bounce 0.2) sampled every 10ms; pair with duration-400. */
+  /* prettier-ignore */
+  --ease-spring: linear(
+    0, 0.0224, 0.0794, 0.1581, 0.2486, 0.3435, 0.4375, 0.5269, 0.6093, 0.6833, 0.7484,
+    0.8044, 0.8518, 0.8911, 0.9231, 0.9487, 0.9688, 0.9841, 0.9954, 1.0036, 1.0091,
+    1.0125, 1.0144, 1.0151, 1.015, 1.0142, 1.0131, 1.0118, 1.0104, 1.0089, 1.0076,
+    1.0063, 1.0051, 1.0041, 1.0032, 1.0024, 1.0018, 1.0013, 1.0009, 1.0006, 1
+  );
+}
+
+/* The theme is set on <html data-theme> by the inline script in layout.tsx. */
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --site-background: #fcfcfc;
+  --foreground: #171717;
+  --title: #202020;
+  --description: #545454;
+  --icon: #202020;
+  --icon-hover: #000000;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --underline: #d9d9d9;
+  --underline-hover: #545454;
+  --card-background: #f2f2f2;
+  --card-background-hover: #eeeeee;
+  --popover-background: #ffffff;
+  --popover-border: #ebebeb;
+  --placeholder: #f2f2f2;
+  --item-background-hover: #f2f2f2;
+  --item-icon: #b0b0b0;
+  --item-icon-active: #999999;
+  --item-icon-background: #ededed;
+  --item-icon-background-active: #e3e3e3;
+  --item-icon-border: #e8e8e8;
+  --item-icon-border-active: #e3e3e3;
+  --item-icon-shadow-1: rgb(0 0 0 / 0.04);
+  --item-icon-shadow-2: rgb(255 255 255 / 0.1);
+  --footer-icon: #999999;
+  --footer-icon-hover: #202020;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0a0a0a;
+  --site-background: #0f0f0f;
+  --foreground: #ededed;
+  --title: #e6e6e6;
+  --description: #b4b4b4;
+  --icon: #e6e6e6;
+  --icon-hover: #ffffff;
+  --muted: #9ca3af;
+  --border: #262626;
+  --underline: #3b3b3b;
+  --underline-hover: #757575;
+  --card-background: #181818;
+  --card-background-hover: #1a1a1a;
+  --popover-background: #181818;
+  --popover-border: #262626;
+  --placeholder: #242424;
+  --item-background-hover: #181818;
+  --item-icon: #545454;
+  --item-icon-active: #8f8f8f;
+  --item-icon-background: #1f1f1f;
+  --item-icon-background-active: #2e2e2e;
+  --item-icon-border: #1f1f1f;
+  --item-icon-border-active: #2b2b2b;
+  --item-icon-shadow-1: rgb(0 0 0 / 0.32);
+  --item-icon-shadow-2: rgb(0 0 0 / 0.06);
+  --footer-icon: #8f8f8f;
+  --footer-icon-hover: #e6e6e6;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--site-background);
+    color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--title) 10%, transparent);
+    color: var(--title);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
