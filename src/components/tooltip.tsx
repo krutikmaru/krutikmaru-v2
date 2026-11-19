@@ -76,7 +76,7 @@ export function Tooltip({
       setOpen(nextOpen);
     },
     placement: "bottom",
-    // Position with top/left so the open animation can use `scale` without compounding a transform.
+    // Position with top/left so the open animation can use `scale` and `translate` without compounding a transform.
     transform: false,
     whileElementsMounted: autoUpdate,
     middleware: [
@@ -174,12 +174,13 @@ export function Tooltip({
             <div
               ref={setFloating}
               data-status={status}
+              data-side={side}
               style={{
                 ...floatingStyles,
                 visibility: middlewareData.hide?.referenceHidden ? "hidden" : undefined,
                 transformOrigin: `${arrowX != null ? `${arrowX + ARROW_WIDTH / 2}px` : "50%"} ${side === "top" ? "100%" : "0"}`,
               }}
-              className="bg-popover-background border-popover-border text-description ease-spring z-50 flex max-h-(--available-height) w-[260px] max-w-(--available-width) flex-col rounded-[28px] border p-3 shadow-[0_12px_32px_-8px_rgb(0_0_0/0.12)] transition-[opacity,scale] duration-400 [corner-shape:superellipse(1.4)] data-[status=close]:opacity-0 data-[status=close]:duration-150 data-[status=close]:ease-out data-[status=initial]:opacity-0 motion-safe:data-[status=close]:scale-96 motion-safe:data-[status=initial]:scale-96 dark:shadow-[0_12px_32px_-8px_rgb(0_0_0/0.6)]"
+              className="bg-popover-background border-popover-border text-description ease-spring z-50 flex max-h-(--available-height) w-[260px] max-w-(--available-width) flex-col rounded-[28px] border p-3 shadow-[0_12px_32px_-8px_rgb(0_0_0/0.12)] transition-[opacity,scale,translate] duration-400 [corner-shape:superellipse(1.4)] data-[status=close]:opacity-0 data-[status=close]:duration-150 data-[status=close]:ease-out data-[status=initial]:opacity-0 motion-safe:data-[status=close]:scale-96 motion-safe:data-[status=initial]:scale-96 motion-safe:data-[status=initial]:data-[side=bottom]:-translate-y-1 motion-safe:data-[status=initial]:data-[side=top]:translate-y-1 dark:shadow-[0_12px_32px_-8px_rgb(0_0_0/0.6)]"
               {...getFloatingProps({
                 "aria-label": interactive ? label : undefined,
                 onPointerDown: handlePointerDown,

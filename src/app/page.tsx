@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CarouselImage } from "@/components/carousel";
 import { Footer } from "@/components/footer";
-import { FramerIcon, JayerIcon, MenuIcon, VerifyCheckIcon } from "@/components/icons";
+import { FramerIcon, MenuIcon, VerifyCheckIcon } from "@/components/icons";
 import { ListItem } from "@/components/list-item";
 import { Mention } from "@/components/mention";
 import { Nav } from "@/components/nav";
@@ -11,6 +11,8 @@ import { VideoCard } from "@/components/video-card";
 import { site } from "@/lib/site";
 import { writings } from "@/lib/writings";
 import appMockup from "../../public/app-mockup.png";
+import finalCutProIcon from "../../public/apps/final-cut-pro.png";
+import jayerAppIcon from "../../public/apps/jayer-app.png";
 import framerLogo from "../../public/framer.jpeg";
 import jayerBanner from "../../public/jayer-banner.png";
 
@@ -81,7 +83,7 @@ export default function Home() {
           <p>
             I’m the founder of{" "}
             <Mention
-              icon={JayerIcon}
+              icon={jayerAppIcon}
               images={jayerPreview}
               description="A design canvas that turns your site’s design into a full codebase."
             >
@@ -109,10 +111,17 @@ export default function Home() {
             made over $50K with Framer templates, client works &amp; distribution.
           </p>
           <p>
-            Currently I am learning Final Cut Pro and creating content on social media
-            platforms in order to analyse and learn content that goes viral and keeps the
-            viewers psychologically hooked so they don’t lose attention and at the same
-            time receive some value from that content.
+            Currently I am learning{" "}
+            <Mention
+              icon={finalCutProIcon}
+              href="https://www.apple.com/in/final-cut-pro/"
+            >
+              Final Cut Pro
+            </Mention>{" "}
+            and creating content on social media platforms in order to analyse and learn
+            content that goes viral and keeps the viewers psychologically hooked so they
+            don’t lose attention and at the same time receive some value from that
+            content.
           </p>
         </div>
       </div>
