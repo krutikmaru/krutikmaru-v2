@@ -21,8 +21,9 @@ import {
   useInteractions,
   useRole,
   useTransitionStatus,
+  type ElementProps,
 } from "@floating-ui/react";
-import { useState, type KeyboardEvent, type ReactNode } from "react";
+import { useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 
 const ARROW_WIDTH = 20;
 const ARROW_HEIGHT = 8;
@@ -41,12 +42,43 @@ type TooltipProps = {
   className?: string;
   /**
    * Set when the content has controls. A tooltip can't hold focus, so it then opens as a non-modal dialog that
-   * keyboard users can Tab into, and the trigger becomes a button.
+   * keyboard users can Tab into, and the trigger becomes a button (unless it's a link).
    */
   interactive?: boolean;
   /** Accessible name of the interactive dialog. */
   label?: string;
+  /**
+   * Makes the trigger a link, opened in a new tab. A click follows it straight away, since hover or focus has
+   * already shown the tooltip; a tap shows the tooltip first and follows the link on the next tap.
+   */
+  href?: string;
 };
+
+// Keeps the tap that opens a linked trigger's tooltip from also following the link. Listed after useClick, so its
+// click handler runs once useClick has opened the tooltip, while `open` is still the value from before the tap.
+function useTapToPreview(open: boolean, enabled: boolean): ElementProps {
+  // The pointer behind the trigger's next click; cleared by a key press, as a click from Enter has none.
+  const pointerType = useRef<string | undefined>(undefined);
+  return useMemo(
+    () =>
+      enabled
+        ? {
+            reference: {
+              onPointerDown(event) {
+                pointerType.current = event.pointerType;
+              },
+              onKeyDown() {
+                pointerType.current = undefined;
+              },
+              onClick(event) {
+                if (!open && pointerType.current === "touch") event.preventDefault();
+              },
+            },
+          }
+        : {},
+    [open, enabled],
+  );
+}
 
 export function Tooltip({
   content,
@@ -54,6 +86,7 @@ export function Tooltip({
   className,
   interactive = false,
   label,
+  href,
 }: TooltipProps) {
   const [open, setOpen] = useState(false);
   const [arrowElement, setArrowElement] = useState<SVGSVGElement | null>(null);
@@ -105,12 +138,14 @@ export function Tooltip({
   });
   const focus = useFocus(context);
   const click = useClick(context, { ignoreMouse: true });
+  const tapToPreview = useTapToPreview(open, !!href);
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: interactive ? "dialog" : "tooltip" });
   const { getReferenceProps, getFloatingProps } = useInteractions([
     hover,
     focus,
     click,
+    tapToPreview,
     dismiss,
     role,
   ]);
@@ -149,18 +184,35 @@ export function Tooltip({
     }
   }
 
+  const triggerProps = getReferenceProps();
+
   return (
     <>
-      <span
-        ref={setReference}
-        tabIndex={0}
-        role={interactive ? "button" : undefined}
-        data-open={open || undefined}
-        className={className}
-        {...getReferenceProps()}
-      >
-        {children}
-      </span>
+      {href ? (
+        <a
+          ref={setReference}
+          href={href}
+          target="_blank"
+          rel="noopener"
+          draggable={false}
+          data-open={open || undefined}
+          className={className}
+          {...triggerProps}
+        >
+          {children}
+        </a>
+      ) : (
+        <span
+          ref={setReference}
+          tabIndex={0}
+          role={interactive ? "button" : undefined}
+          data-open={open || undefined}
+          className={className}
+          {...triggerProps}
+        >
+          {children}
+        </span>
+      )}
       {isMounted && (
         <FloatingPortal>
           {/* Hover must not steal focus, so nothing is focused on open; keyboard users Tab in from the trigger. */}

@@ -17,10 +17,11 @@ type MentionProps = {
        * placeholder stands in without any.
        */
       images?: CarouselImage[];
-      href?: never;
+      /** Opened in a new tab on click. On touch, the first tap shows the preview and the next one follows it. */
+      href?: string;
     }
   | {
-      /** Opened in a new tab. A linked mention has no hover preview. */
+      /** Opened in a new tab. Without a description there's no hover preview. */
       href: string;
       description?: never;
       images?: never;
@@ -70,7 +71,7 @@ export function Mention({
     <Icon size={12} className="mr-0.5 inline-block align-[-1px]" />
   );
 
-  if (href) {
+  if (!description) {
     return (
       <a
         href={href}
@@ -89,6 +90,7 @@ export function Mention({
     <Tooltip
       interactive={hasCarousel}
       label={name && `${name} preview`}
+      href={href}
       className={`${className} data-open:border-underline-hover`}
       content={
         <>

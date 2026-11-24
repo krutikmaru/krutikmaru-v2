@@ -84,6 +84,7 @@ export default function Home() {
             I’m the founder of{" "}
             <Mention
               icon={jayerAppIcon}
+              href="https://jayer.app"
               images={jayerPreview}
               description="A design canvas that turns your site’s design into a full codebase."
             >
@@ -98,6 +99,7 @@ export default function Home() {
             I’ve officially worked with the{" "}
             <Mention
               icon={FramerIcon}
+              href="https://www.framer.com"
               images={framerPreview}
               description="A website builder for designers, from first draft to published site."
             >

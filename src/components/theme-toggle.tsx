@@ -21,8 +21,8 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
       className="text-icon hover:text-icon-hover flex cursor-pointer items-center"
     >
-      <MoonIcon size={14} className="dark:hidden" />
-      <SunIcon size={14} className="hidden dark:block" />
+      <MoonIcon size={13} className="dark:hidden" />
+      <SunIcon size={13} className="hidden dark:block" />
     </button>
   );
 }
