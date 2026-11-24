@@ -8,6 +8,7 @@ export { JayerIcon } from "./jayer";
 export { LinkedInIcon } from "./linkedin";
 export { MenuIcon } from "./menu";
 export { MoonIcon } from "./moon";
+export { SearchIcon } from "./search";
 export { SunIcon } from "./sun";
 export { TwitterIcon } from "./twitter";
 export { VerifyCheckIcon } from "./verify-check";

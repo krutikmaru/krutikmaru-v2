@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
+import { writingHref, writings } from "@/lib/writings";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -15,5 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    ...writings.map((writing) => ({
+      url: `${site.url}${writingHref(writing.slug)}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 }

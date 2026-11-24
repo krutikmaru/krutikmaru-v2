@@ -9,7 +9,7 @@ import { Nav } from "@/components/nav";
 import { RecentSkillCard } from "@/components/recent-skill-card";
 import { VideoCard } from "@/components/video-card";
 import { site } from "@/lib/site";
-import { writings } from "@/lib/writings";
+import { writingHref, writings } from "@/lib/writings";
 import appMockup from "../../public/app-mockup.png";
 import finalCutProIcon from "../../public/apps/final-cut-pro.png";
 import jayerAppIcon from "../../public/apps/jayer-app.png";
@@ -159,7 +159,13 @@ export default function Home() {
         </div>
         <ul className="flex w-full flex-col gap-1">
           {writings.map((writing) => (
-            <ListItem key={writing.title} icon={MenuIcon} {...writing} />
+            <ListItem
+              key={writing.slug}
+              icon={MenuIcon}
+              title={writing.title}
+              tag={writing.tag}
+              href={writingHref(writing.slug)}
+            />
           ))}
         </ul>
       </section>
