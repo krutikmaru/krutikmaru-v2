@@ -33,6 +33,7 @@
   --color-popover-border: var(--popover-border);
   --color-placeholder: var(--placeholder);
   --color-item-background-hover: var(--item-background-hover);
+  --color-menu-item-background-selected: var(--menu-item-background-selected);
   --color-item-icon: var(--item-icon);
   --color-item-icon-active: var(--item-icon-active);
   --color-item-icon-background: var(--item-icon-background);
@@ -75,6 +76,8 @@
   --popover-border: #ebebeb;
   --placeholder: #f2f2f2;
   --item-background-hover: #f2f2f2;
+  /* A tint rather than a solid gray, since the command menu's panel is translucent. */
+  --menu-item-background-selected: rgb(0 0 0 / 0.04);
   --item-icon: #b0b0b0;
   --item-icon-active: #999999;
   --item-icon-background: #ededed;
@@ -106,6 +109,7 @@
   --popover-border: #262626;
   --placeholder: #242424;
   --item-background-hover: #181818;
+  --menu-item-background-selected: rgb(255 255 255 / 0.03);
   --item-icon: #545454;
   --item-icon-active: #8f8f8f;
   --item-icon-background: #1f1f1f;

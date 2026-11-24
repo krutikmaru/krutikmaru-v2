@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CommandMenu } from "@/components/command-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
@@ -34,7 +35,10 @@ export function Nav() {
           );
         })}
       </div>
-      <ThemeToggle />
+      <div className="flex flex-row items-center gap-3">
+        <CommandMenu />
+        <ThemeToggle />
+      </div>
     </nav>
   );
 }
